@@ -64,36 +64,34 @@ const images = [
   },
 ];
 
-let containList = document.querySelector('.gallery');
+const gallery = document.querySelector('.gallery');
 
-const imagesList = images
-  .map(
-    ({ preview, original, description }) =>
-      `<li class="gallery-item">
-  <a class="gallery-link" href="${original}">
-    <img
-      class="gallery-image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}" />
-  </a>
-</li>`
-  )
+console.log(gallery);
+const galleryMarkup = images
+  .map(({ preview, original, description }) => {
+    return `<li class="gallery-item">
+            <a class="gallery-link" href="${original}">
+                <img
+                    class="gallery-image"
+                    src="${preview}"
+                    data-source="${original}"
+                    alt="${description}"
+                    width="360" height="200"
+                />
+            </a>
+        </li>`;
+  })
   .join('');
 
-containList.insertAdjacentHTML('beforeend', imagesList);
-containList.addEventListener('click', ev => {
-  ev.preventDefault();
-  const { target } = ev;
-  const bigImg = target.dataset.source;
-  const altText = target.alt;
+gallery.insertAdjacentHTML('beforeend', galleryMarkup);
 
-  if (!bigImg) {
-    return;
-  }
-  const instance = basicLightbox.create(
-    `<img src="${bigImg}" alt="${altText}" width="1112" height="640">`
-  );
+gallery.addEventListener('click', function (event) {
+  event.preventDefault();
+  const image = event.target.closest('img.gallery-image');
+  if (!image) return;
+  const biggerImage = image.dataset.source;
+  const instance = basicLightbox.create(`
+    <img src="${biggerImage}" width="1112" height="640">
+    `);
   instance.show();
-  console.log(bigImg);
 });
