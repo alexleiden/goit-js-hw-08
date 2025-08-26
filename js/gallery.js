@@ -91,9 +91,9 @@ containList.addEventListener('click', ev => {
   if (!bigImg) {
     return;
   }
-  const instance = basicLightbox.create(`
-    <img src="${bigImg}" alt="${altText}" width="1112" height="640">
-  `);
+  const instance = basicLightbox.create(
+    `<img src="${bigImg}" alt="${altText}" width="1112" height="640">`
+  );
   instance.show();
   console.log(bigImg);
 });
